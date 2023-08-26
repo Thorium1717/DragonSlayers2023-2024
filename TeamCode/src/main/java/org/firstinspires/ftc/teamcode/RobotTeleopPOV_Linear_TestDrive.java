@@ -26,10 +26,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.firstinspires.ftc.teamcode;
-
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -39,10 +36,6 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
-
-
-
-
 /**
  * This particular OpMode executes a POV Game style Teleop for a direct drive robot
  * The code is structured as a LinearOpMode
@@ -54,12 +47,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
 @TeleOp(name="Robot: TeleOp Test 1", group="Robot")
 //@Disabled
-public class RobotTeleopPOV_Linear_TestDrive extends LinearOpMode {
-    private Gyroscope imu;
 
+public class RobotTeleopPOV_Linear_TestDrive extends LinearOpMode {
 
     public void runOpMode() {
 
@@ -68,8 +59,6 @@ public class RobotTeleopPOV_Linear_TestDrive extends LinearOpMode {
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
-        Servo clawServo = hardwareMap.servo.get("clawMotor");
-        DcMotor liftMotor1 = hardwareMap.dcMotor.get("liftMotor1");
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
@@ -79,8 +68,6 @@ public class RobotTeleopPOV_Linear_TestDrive extends LinearOpMode {
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        Claw claw = new Claw(clawServo);
-        Elevator lift = new Elevator(gamepad2, liftMotor1);
         // run until the end of the match (driver presses STOP)
         if (isStopRequested()) return;
 
@@ -99,31 +86,14 @@ public class RobotTeleopPOV_Linear_TestDrive extends LinearOpMode {
 
             //this is to tune the speed of the robot
             frontLeftPower = frontLeftPower * 0.5;//currently the speed is halved
-            backLeftPower = backLeftPower * 0.5;
-            frontRightPower = frontRightPower * 0.5;
+            backLeftPower = backLeftPower * 0.5;  //It was ideal for competion last year, but I suppose
+            frontRightPower = frontRightPower * 0.5;//suppose it could be changed anytime
             backRightPower = backRightPower * 0.5;
 
             motorFrontLeft.setPower(frontLeftPower);
             motorBackLeft.setPower(backLeftPower);
             motorFrontRight.setPower(frontRightPower);
             motorBackRight.setPower(backRightPower);
-
-            //Elevator:
-            lift.moveWithJoystick(gamepad2);
-
-            //Claw:
-            boolean buttonA = gamepad2.a;
-            boolean buttonY = gamepad2.y;
-            boolean buttonB = gamepad2.b;
-
-            if (buttonA) {
-                claw.setOpen();
-            } else if (buttonY) {
-                claw.setPartial();
-            } else if (buttonB) {
-                claw.setClosed();
-            }
-
         }
     }
 }
